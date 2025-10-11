@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Datos Guardados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .data-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .danger {
+            background: #e74c3c;
+        }
+        .danger:hover {
+            background: #c0392b;
+        }
+        .success {
+            background: #27ae60;
+        }
+        .success:hover {
+            background: #229954;
+        }
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗄️ Administrador de Datos - Calculadora de Física</h1>
+        <p>Aquí puedes ver y administrar los cálculos guardados en tu navegador</p>
+
+        <div class="stats" id="stats">
+            <!-- Se llenará dinámicamente -->
+        </div>
+
+        <div class="data-section">
+            <h2>📊 Información del Almacenamiento</h2>
+            <p><strong>Ubicación:</strong> localStorage del navegador (local en tu computadora)</p>
+            <p><strong>Clave de almacenamiento:</strong> <code>'fisica_calculos'</code></p>
+            <p><strong>Persistencia:</strong> Los datos se mantienen entre sesiones hasta que borres los datos del navegador</p>
+            
+            <button onclick="checkStorage()">🔍 Verificar Datos</button>
+            <button onclick="showAllData()">📋 Ver Todos los Datos</button>
+            <button onclick="exportData()" class="success">💾 Exportar Datos</button>
+            <button onclick="clearAllData()" class="danger">🗑️ Borrar Todo</button>
+        </div>
+
+        <div class="data-section">
+            <h2>📈 Estadísticas de uso</h2>
+            <div id="statsDetails"></div>
+        </div>
+
+        <div class="data-section">
+            <h2>📋 Datos Guardados</h2>
+            <div id="dataDisplay">
+                <p>Haz clic en "Verificar Datos" para ver la información</p>
+            </div>
+        </div>
+
+        <div class="data-section">
+            <h2>🔧 Herramientas de Desarrollo</h2>
+            <p>Para acceso directo desde la consola del navegador:</p>
+            <pre>// Ver todos los cálculos guardados
+console.log(JSON.parse(localStorage.getItem('fisica_calculos') || '[]'));
+
+// Borrar todos los datos
+localStorage.removeItem('fisica_calculos');
+
+// Ver tamaño de los datos
+console.log('Tamaño:', JSON.stringify(localStorage.getItem('fisica_calculos')).length, 'caracteres');</pre>
+        </div>
+    </div>
+
+    <script>
+        function updateStats() {
+            const data = JSON.parse(localStorage.getItem('fisica_calculos') || '[]');
+            const statsContainer = document.getElementById('stats');
+            
+            // Contar por tipo de escenario
+            const scenarios = {};
+            data.forEach(calc => {
+                const name = calc.EscenarioNombre || 'Sin nombre';
+                scenarios[name] = (scenarios[name] || 0) + 1;
+            });
+
+            // Calcular tamaño en KB
+            const dataSize = (JSON.stringify(data).length / 1024).toFixed(2);
+            
+            statsContainer.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-number">${data.length}</div>
+                    <div>Cálculos Guardados</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${Object.keys(scenarios).length}</div>
+                    <div>Tipos de Fórmulas Usadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${dataSize}</div>
+                    <div>KB de Datos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">${data.length > 0 ? new Date(data[0].Fecha).toLocaleDateString() : 'N/A'}</div>
+                    <div>Último Cálculo</div>
+                </div>
+            `;
+
+            // Mostrar estadísticas detalladas
+            const detailsHtml = Object.keys(scenarios).length > 0 ? 
+                Object.entries(scenarios)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([name, count]) => `<li><strong>${name}:</strong> ${count} cálculos</li>`)
+                    .join('') :
+                '<li>No hay cálculos guardados aún</li>';
+            
+            document.getElementById('statsDetails').innerHTML = `
+                <h4>Fórmulas más utilizadas:</h4>
+                <ul>${detailsHtml}</ul>
+            `;
+        }
+
+        function checkStorage() {
+            const data = localStorage.getItem('fisica_calculos');
+            const display = document.getElementById('dataDisplay');
+            
+            if (!data || data === '[]') {
+                display.innerHTML = `
+                    <div style="background: rgba(231, 76, 60, 0.2); padding: 15px; border-radius: 8px; border: 2px solid #e74c3c;">
+                        <h3>❌ No hay datos guardados</h3>
+                        <p>Aún no has realizado ningún cálculo o no has guardado ninguno.</p>
+                        <p><strong>Para generar datos:</strong></p>
+                        <ol>
+                            <li>Ve a <a href="index.html" style="color: #3498db;">la calculadora principal</a></li>
+                            <li>Realiza un cálculo</li>
+                            <li>Haz clic en "Guardar"</li>
+                            <li>Regresa aquí para ver los datos</li>
+                        </ol>
+                    </div>
+                `;
+            } else {
+                const parsedData = JSON.parse(data);
+                display.innerHTML = `
+                    <div style="background: rgba(39, 174, 96, 0.2); padding: 15px; border-radius: 8px; border: 2px solid #27ae60;">
+                        <h3>✅ Datos encontrados</h3>
+                        <p><strong>Total de cálculos guardados:</strong> ${parsedData.length}</p>
+                        <p><strong>Primer cálculo:</strong> ${parsedData.length > 0 ? new Date(parsedData[parsedData.length - 1].Fecha).toLocaleString() : 'N/A'}</p>
+                        <p><strong>Último cálculo:</strong> ${parsedData.length > 0 ? new Date(parsedData[0].Fecha).toLocaleString() : 'N/A'}</p>
+                    </div>
+                `;
+            }
+            updateStats();
+        }
+
+        function showAllData() {
+            const data = localStorage.getItem('fisica_calculos');
+            const display = document.getElementById('dataDisplay');
+            
+            if (!data || data === '[]') {
+                display.innerHTML = '<p style="color: #e74c3c;"><strong>No hay datos para mostrar</strong></p>';
+                return;
+            }
+
+            const parsedData = JSON.parse(data);
+            let html = '<h3>📋 Todos los Cálculos Guardados:</h3>';
+            
+            parsedData.forEach((calc, index) => {
+                const fecha = new Date(calc.Fecha).toLocaleString();
+                html += `
+                    <div style="background: rgba(255, 255, 255, 0.1); margin: 10px 0; padding: 15px; border-radius: 8px; border-left: 4px solid #3498db;">
+                        <strong>${index + 1}. ${calc.EscenarioNombre}</strong><br>
+                        <small style="color: #bdc3c7;">📅 ${fecha}</small><br>
+                        <code style="background: rgba(0,0,0,0.3); padding: 5px; border-radius: 4px; display: inline-block; margin-top: 5px;">
+                            ${calc.Resultado ? calc.Resultado.substring(0, 100) + (calc.Resultado.length > 100 ? '...' : '') : 'Sin resultado'}
+                        </code>
+                    </div>
+                `;
+            });
+            
+            display.innerHTML = html;
+        }
+
+        function exportData() {
+            const data = localStorage.getItem('fisica_calculos');
+            if (!data || data === '[]') {
+                alert('❌ No hay datos para exportar');
+                return;
+            }
+
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `calculadora_fisica_backup_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('✅ Datos exportados exitosamente');
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ ¿Estás seguro de que quieres borrar TODOS los cálculos guardados?\n\nEsta acción NO se puede deshacer.')) {
+                localStorage.removeItem('fisica_calculos');
+                alert('✅ Todos los datos han sido borrados');
+                checkStorage();
+            }
+        }
+
+        // Cargar estadísticas al iniciar
+        window.onload = function() {
+            updateStats();
+        };
+    </script>
+</body>
+</html>

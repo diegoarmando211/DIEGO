@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 PhysicsLab Pro - Calculadora Cuántica</title>
+    <meta name="description" content="La calculadora de física más avanzada. Experimenta la física como nunca antes.">
+    
+    <!-- Fuentes e iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="css/styles_new.css">
+    
+    <!-- Meta tags para mejor experiencia -->
+    <meta name="theme-color" content="#667eea">
+    <link rel="manifest" href="manifest.json">
+    <!-- Favicon: usar SVG disponible en images para evitar 404 si no hay favicon.ico -->
+    <link rel="icon" href="images/physics_hero.svg" type="image/svg+xml">
+</head>
+<body>
+    <!-- Partículas flotantes de fondo -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-rocket"></i>Calculadora Fisica</h1>
+            <p><i class="fas fa-atom"></i> La calculadora de física más avanzada <i class="fas fa-infinity"></i></p>
+            <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                    <i class="fas fa-check-circle" style="color: #2ecc71;"></i> 13 Fórmulas Implementadas
+                </span>
+                <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                    <i class="fas fa-database" style="color: #3498db;"></i> Datos Persistentes
+                </span>
+                <span style="background: rgba(255,255,255,0.1); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                    <i class="fas fa-chart-line" style="color: #e74c3c;"></i> Análisis Avanzado
+                </span>
+            </div>
+            
+            <!-- Control de audio -->
+            <div style="position: absolute; top: 1rem; right: 1rem;">
+                <button id="audioToggle" class="btn btn-secondary" style="min-width: auto; padding: 0.5rem;">
+                    <i class="fas fa-volume-up" id="audioIcon"></i>
+                </button>
+            </div>
+            
+            <!-- Imagen hero -->
+            <div style="margin-top: 2rem; text-align: center;">
+                <img src="images/physics_hero.svg" alt="Physics Lab Pro" style="max-width: 100%; height: auto; border-radius: 15px; opacity: 0.8;">
+            </div>
+        </header>
+
+        <nav class="navigation">
+            <button class="nav-btn active interactive-element stagger-animation" data-section="calculadora">
+                <i class="fas fa-rocket"></i> Laboratorio
+            </button>
+            <button class="nav-btn interactive-element stagger-animation" data-section="historial">
+                <i class="fas fa-brain"></i> Memoria Cuántica
+            </button>
+            <button class="nav-btn interactive-element stagger-animation" data-section="teoria">
+                <i class="fas fa-atom"></i> Teoría Cósmica
+            </button>
+        </nav>
+
+        <main class="main-content">
+            <!-- Sección Calculadora -->
+            <section id="calculadora" class="section active">
+                <div class="calculator-container">
+                    <div class="scenario-selector">
+                        <h3>Selecciona el tipo de cálculo:</h3>
+                        <select id="escenarioSelect" class="form-select">
+                            <option value="">-- Selecciona un escenario --</option>
+                        </select>
+                    </div>
+
+                    <div id="calculatorForm" class="calculator-form" style="display: none;">
+                        <div class="form-section">
+                            <div class="scenario-info">
+                                <h4 id="scenarioTitle"></h4>
+                                <p id="scenarioFormula"></p>
+                                <div id="scenarioMedia" class="media-container"></div>
+                            </div>
+                            
+                            <div id="parametersContainer" class="parameters-container"></div>
+                            
+                            <div class="action-buttons">
+                                <button id="calculateBtn" class="btn btn-primary">
+                                    <i class="fas fa-play"></i> Calcular
+                                </button>
+                                <button id="clearBtn" class="btn btn-secondary">
+                                    <i class="fas fa-eraser"></i> Limpiar
+                                </button>
+                                <button id="saveBtn" class="btn btn-success" style="display: none;">
+                                    <i class="fas fa-save"></i> Guardar
+                                </button>
+                            </div>
+
+                            <div id="resultContainer" class="result-container" style="display: none;">
+                                <h4>Resultado:</h4>
+                                <!-- Contenedor principal donde se inyecta el HTML del resultado -->
+                                <div id="resultContent" class="result-content"></div>
+                                <!-- Campos legacy (mantener para compatibilidad si se usan en CSS) -->
+                                <div id="result" class="result-value" style="display:none;"></div>
+                                <div id="resultUnit" class="result-unit" style="display:none;"></div>
+                                <div id="resultExplanation" class="result-explanation" style="display:none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sección Historial -->
+            <section id="historial" class="section">
+                <div class="history-container">
+                    <h3>Historial de Cálculos</h3>
+                    <div class="history-filters">
+                        <select id="filterEscenario" class="form-select">
+                            <option value="">Todos los escenarios</option>
+                        </select>
+                        <input type="date" id="filterFecha" class="form-input">
+                        <button id="filterBtn" class="btn btn-info">
+                            <i class="fas fa-filter"></i> Filtrar
+                        </button>
+                        <button id="clearFiltersBtn" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Limpiar
+                        </button>
+                    </div>
+                    <div id="historyList" class="history-list"></div>
+                </div>
+            </section>
+
+            <!-- Sección Teoría -->
+            <section id="teoria" class="section">
+                <div class="theory-container">
+                    <h3>Teoría y Fórmulas</h3>
+                    <div id="theoryContent" class="theory-content">
+                        <div class="theory-section">
+                            <h4>Trabajo de una Fuerza Constante</h4>
+                            <p><strong>Fórmula:</strong> W = F × d × cos(θ)</p>
+                            <p><strong>Unidades:</strong> J (Joules)</p>
+                            <img src="images/trabajo_simple.svg" alt="Trabajo de fuerza" class="theory-image">
+                        </div>
+                        
+                        <div class="theory-section">
+                            <h4>Energía Cinética</h4>
+                            <p><strong>Fórmula:</strong> Ec = ½mv²</p>
+                            <p><strong>Unidades:</strong> J (Joules)</p>
+                            <img src="images/energia_cinetica.svg" alt="Energía cinética" class="theory-image">
+                        </div>
+                        
+                        <div class="theory-section">
+                            <h4>Energía Potencial</h4>
+                            <p><strong>Fórmula:</strong> Ep = mgh</p>
+                            <p><strong>Unidades:</strong> J (Joules)</p>
+                            <img src="images/energia_potencial.svg" alt="Energía potencial" class="theory-image">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Calculadora de Física - Sistema Completo</p>
+        </footer>
+    </div>
+
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <div class="loading-spinner"></div>
+            <p>Procesando cálculo...</p>
+        </div>
+    </div>
+
+    <script src="js/audio.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/calculations.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

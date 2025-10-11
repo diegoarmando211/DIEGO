@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba - Calculadora de Física</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .success { color: #27ae60; }
+        .error { color: #e74c3c; }
+        .info { color: #3498db; }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .result {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Prueba de la Calculadora de Física</h1>
+    <p>Esta página te permite probar los componentes principales de la calculadora antes de usar la aplicación completa.</p>
+
+    <div class="test-section">
+        <h2 class="test-title">1. Prueba de Cálculos Básicos</h2>
+        <p>Prueba las fórmulas físicas implementadas:</p>
+        
+        <button onclick="testEnergiaCinetica()">Probar Energía Cinética</button>
+        <button onclick="testEnergiaPotencial()">Probar Energía Potencial</button>
+        <button onclick="testTrabajo()">Probar Trabajo</button>
+        <button onclick="testPotencia()">Probar Potencia</button>
+        
+        <div id="calculationResults" class="result" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">2. Prueba de Base de Datos (Simulador)</h2>
+        <p>Verifica que el simulador de base de datos funcione:</p>
+        
+        <button onclick="testDatabase()">Probar Conexión DB</button>
+        <button onclick="loadEscenarios()">Cargar Escenarios</button>
+        <button onclick="saveTestCalculo()">Guardar Cálculo de Prueba</button>
+        
+        <div id="databaseResults" class="result" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">3. Prueba de Validaciones</h2>
+        <p>Verifica que las validaciones de parámetros funcionen:</p>
+        
+        <button onclick="testValidations()">Probar Validaciones</button>
+        
+        <div id="validationResults" class="result" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">4. Ver Imágenes de Escenarios</h2>
+        <p>Verifica que las imágenes SVG se muestren correctamente:</p>
+        
+        <button onclick="showImages()">Mostrar Imágenes</button>
+        
+        <div id="imageResults" style="display: none;">
+            <h3>Trabajo con Ángulo:</h3>
+            <img src="images/trabajo_angulo.svg" alt="Trabajo con ángulo" style="max-width: 100%; border: 1px solid #ddd;">
+            
+            <h3>Energía Cinética:</h3>
+            <img src="images/energia_cinetica.svg" alt="Energía cinética" style="max-width: 100%; border: 1px solid #ddd;">
+            
+            <h3>Energía Potencial:</h3>
+            <img src="images/energia_potencial.svg" alt="Energía potencial" style="max-width: 100%; border: 1px solid #ddd;">
+            
+            <h3>Trabajo Simple:</h3>
+            <img src="images/trabajo_simple.svg" alt="Trabajo simple" style="max-width: 100%; border: 1px solid #ddd;">
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2 class="test-title">5. Ir a la Aplicación Completa</h2>
+        <p>Si todas las pruebas funcionan correctamente:</p>
+        <a href="index.html" style="display: inline-block; background: #27ae60; color: white; padding: 15px 30px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+            🚀 Abrir Calculadora Completa
+        </a>
+    </div>
+
+    <!-- Cargar los scripts necesarios -->
+    <script src="js/database.js"></script>
+    <script src="js/calculations.js"></script>
+
+    <script>
+        // Función para mostrar resultados
+        function showResult(elementId, content, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.style.display = 'block';
+            element.innerHTML = `<div class="${type}">${content}</div>`;
+        }
+
+        // Prueba de energía cinética
+        function testEnergiaCinetica() {
+            try {
+                const result = physicsCalculator.calcularEnergiaCinetica(10, 5); // 10 kg, 5 m/s
+                showResult('calculationResults', `
+                    <strong>✅ Energía Cinética:</strong><br>
+                    Masa: 10 kg, Velocidad: 5 m/s<br>
+                    Resultado: ${result.resultado} J<br>
+                    Explicación: ${result.explicacion}<br>
+                    <strong>Pasos:</strong><br>
+                    ${result.pasos.map(paso => `• ${paso}`).join('<br>')}
+                `, 'success');
+            } catch (error) {
+                showResult('calculationResults', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Prueba de energía potencial
+        function testEnergiaPotencial() {
+            try {
+                const result = physicsCalculator.calcularEnergiaPotencial(5, 10); // 5 kg, 10 m
+                showResult('calculationResults', `
+                    <strong>✅ Energía Potencial:</strong><br>
+                    Masa: 5 kg, Altura: 10 m<br>
+                    Resultado: ${result.resultado} J<br>
+                    Explicación: ${result.explicacion}<br>
+                    <strong>Pasos:</strong><br>
+                    ${result.pasos.map(paso => `• ${paso}`).join('<br>')}
+                `, 'success');
+            } catch (error) {
+                showResult('calculationResults', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Prueba de trabajo
+        function testTrabajo() {
+            try {
+                const result = physicsCalculator.calcularTrabajoConAngulo(100, 5, 30); // 100 N, 5 m, 30°
+                showResult('calculationResults', `
+                    <strong>✅ Trabajo con Ángulo:</strong><br>
+                    Fuerza: 100 N, Distancia: 5 m, Ángulo: 30°<br>
+                    Resultado: ${result.resultado} J<br>
+                    Explicación: ${result.explicacion}<br>
+                    <strong>Pasos:</strong><br>
+                    ${result.pasos.map(paso => `• ${paso}`).join('<br>')}
+                `, 'success');
+            } catch (error) {
+                showResult('calculationResults', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Prueba de potencia
+        function testPotencia() {
+            try {
+                const result = physicsCalculator.calcularPotencia(50, 10, 5, 0); // 50 N, 10 m, 5 s, 0°
+                showResult('calculationResults', `
+                    <strong>✅ Potencia:</strong><br>
+                    Fuerza: 50 N, Distancia: 10 m, Tiempo: 5 s, Ángulo: 0°<br>
+                    Resultado: ${result.resultado} W<br>
+                    Explicación: ${result.explicacion}<br>
+                    <strong>Pasos:</strong><br>
+                    ${result.pasos.map(paso => `• ${paso}`).join('<br>')}
+                `, 'success');
+            } catch (error) {
+                showResult('calculationResults', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Prueba de base de datos
+        async function testDatabase() {
+            try {
+                const escenarios = await dbManager.getEscenarios();
+                showResult('databaseResults', `
+                    <strong>✅ Conexión a Base de Datos:</strong><br>
+                    Se cargaron ${escenarios.length} escenarios correctamente<br>
+                    <strong>Escenarios disponibles:</strong><br>
+                    ${escenarios.map(e => `• ${e.Nombre} (${e.Codigo})`).join('<br>')}
+                `, 'success');
+            } catch (error) {
+                showResult('databaseResults', `❌ Error de DB: ${error.message}`, 'error');
+            }
+        }
+
+        // Cargar escenarios
+        async function loadEscenarios() {
+            try {
+                const escenario = await dbManager.getEscenarioById(5); // Energía cinética
+                showResult('databaseResults', `
+                    <strong>✅ Escenario Cargado:</strong><br>
+                    Nombre: ${escenario.Nombre}<br>
+                    Fórmula: ${escenario.FormulaDescripcion}<br>
+                    Unidad: ${escenario.UnidadResultado}<br>
+                    <strong>Parámetros:</strong><br>
+                    ${escenario.parametros.map(p => `• ${p.Nombre} (${p.Unidad})`).join('<br>')}
+                `, 'success');
+            } catch (error) {
+                showResult('databaseResults', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Guardar cálculo de prueba
+        async function saveTestCalculo() {
+            try {
+                const calculoData = {
+                    EscenarioID: 5,
+                    EscenarioNombre: 'Energía cinética (PRUEBA)',
+                    Resultado: 125,
+                    UnidadResultado: 'J',
+                    Parametros: { m: 10, v: 5 }
+                };
+                
+                const result = await dbManager.saveCalculo(calculoData);
+                showResult('databaseResults', `
+                    <strong>✅ Cálculo Guardado:</strong><br>
+                    ID: ${result.CalculoID}<br>
+                    Fecha: ${new Date(result.Fecha).toLocaleString()}<br>
+                    Resultado: ${result.Resultado} ${result.UnidadResultado}
+                `, 'success');
+            } catch (error) {
+                showResult('databaseResults', `❌ Error al guardar: ${error.message}`, 'error');
+            }
+        }
+
+        // Prueba de validaciones
+        function testValidations() {
+            try {
+                // Crear un escenario de prueba
+                const escenario = {
+                    parametros: [
+                        { Codigo: 'm', Nombre: 'Masa (kg)' },
+                        { Codigo: 'v', Nombre: 'Velocidad (m/s)' },
+                        { Codigo: 't', Nombre: 'Tiempo (s)' }
+                    ]
+                };
+
+                // Probar parámetros válidos
+                const validParams = { m: 10, v: 5, t: 2 };
+                const validErrors = physicsCalculator.validarParametros(escenario, validParams);
+
+                // Probar parámetros inválidos
+                const invalidParams = { m: -5, v: 'abc', t: 0 };
+                const invalidErrors = physicsCalculator.validarParametros(escenario, invalidParams);
+
+                showResult('validationResults', `
+                    <strong>✅ Validaciones:</strong><br>
+                    <strong>Parámetros válidos:</strong> ${validErrors.length === 0 ? '✓ Ningún error' : '✗ ' + validErrors.join(', ')}<br>
+                    <strong>Parámetros inválidos:</strong><br>
+                    ${invalidErrors.length > 0 ? invalidErrors.map(err => `• ${err}`).join('<br>') : '✗ No se detectaron errores (problema)'}
+                `, validErrors.length === 0 && invalidErrors.length > 0 ? 'success' : 'error');
+            } catch (error) {
+                showResult('validationResults', `❌ Error en validaciones: ${error.message}`, 'error');
+            }
+        }
+
+        // Mostrar imágenes
+        function showImages() {
+            const imageResults = document.getElementById('imageResults');
+            imageResults.style.display = 'block';
+        }
+
+        // Ejecutar prueba inicial
+        window.addEventListener('load', () => {
+            console.log('🧪 Página de pruebas cargada');
+            console.log('📦 Componentes disponibles:', {
+                dbManager: typeof dbManager !== 'undefined',
+                physicsCalculator: typeof physicsCalculator !== 'undefined'
+            });
+        });
+    </script>
+</body>
+</html>

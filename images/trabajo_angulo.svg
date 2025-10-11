@@ -1,0 +1,52 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .vector-text { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .force-vector { stroke: #e74c3c; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .displacement-vector { stroke: #27ae60; stroke-width: 3; fill: none; marker-end: url(#arrowhead2); }
+      .object { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+      .ground { fill: #7f8c8d; }
+      .angle-arc { fill: none; stroke: #f39c12; stroke-width: 2; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7, 1 3.5" fill="#e74c3c" />
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7, 1 3.5" fill="#27ae60" />
+    </marker>
+  </defs>
+  
+  <!-- Título -->
+  <text x="200" y="20" text-anchor="middle" class="vector-text" style="font-size: 16px; font-weight: bold;">
+    Trabajo con Fuerza y Ángulo
+  </text>
+  
+  <!-- Superficie -->
+  <rect x="50" y="150" width="300" height="30" class="ground"/>
+  
+  <!-- Objeto (caja) -->
+  <rect x="80" y="120" width="40" height="30" class="object"/>
+  
+  <!-- Vector fuerza -->
+  <line x1="100" y1="135" x2="180" y2="95" class="force-vector"/>
+  <text x="140" y="110" class="vector-text">F</text>
+  
+  <!-- Vector desplazamiento -->
+  <line x1="120" y1="135" x2="220" y2="135" class="displacement-vector"/>
+  <text x="170" y="155" class="vector-text">d</text>
+  
+  <!-- Arco del ángulo -->
+  <path d="M 140 135 A 20 20 0 0 0 160 115" class="angle-arc"/>
+  <text x="155" y="130" class="vector-text">θ</text>
+  
+  <!-- Fórmula -->
+  <text x="250" y="50" class="vector-text" style="font-size: 16px; font-weight: bold;">
+    W = F × d × cos(θ)
+  </text>
+  
+  <!-- Leyenda -->
+  <text x="250" y="80" class="vector-text">F = Fuerza aplicada</text>
+  <text x="250" y="95" class="vector-text">d = Desplazamiento</text>
+  <text x="250" y="110" class="vector-text">θ = Ángulo entre F y d</text>
+  <text x="250" y="125" class="vector-text">W = Trabajo realizado</text>
+</svg>

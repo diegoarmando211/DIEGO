@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Colores y Legibilidad - Physics Lab Pro</title>
+    <link rel="stylesheet" href="css/styles_new.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-atom"></i>Physics Lab Pro</h1>
+            <p>Prueba de Colores y Legibilidad Mejorada</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <button class="nav-btn active">
+                <i class="fas fa-calculator"></i>
+                Calculadora
+            </button>
+            <button class="nav-btn">
+                <i class="fas fa-book"></i>
+                Teoría
+            </button>
+            <button class="nav-btn">
+                <i class="fas fa-chart-bar"></i>
+                Datos
+            </button>
+        </nav>
+
+        <!-- Test Section -->
+        <section class="section active">
+            <h2>Prueba de Legibilidad de Colores</h2>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <h3>Formulario de Prueba</h3>
+                
+                <!-- Scenario Selector -->
+                <div class="scenario-selector">
+                    <select>
+                        <option>Selecciona un escenario</option>
+                        <option>Trabajo de fuerza constante</option>
+                        <option>Energía cinética</option>
+                        <option>Energía potencial</option>
+                    </select>
+                </div>
+
+                <!-- Formula Display -->
+                <div class="formula-display">
+                    <div class="formula-main">W = F × d × cos(θ)</div>
+                    <div class="formula-result">Trabajo = Fuerza × Distancia × cos(Ángulo)</div>
+                    <div class="formula-description">
+                        Esta fórmula calcula el trabajo realizado por una fuerza constante
+                    </div>
+                    <div class="formula-notes">
+                        Nota: El ángulo θ es el ángulo entre la fuerza y el desplazamiento
+                    </div>
+                </div>
+
+                <!-- Parameter Groups -->
+                <div class="parameter-group">
+                    <label for="force">
+                        Fuerza (F)
+                        <span class="param-help">?</span>
+                    </label>
+                    <input type="number" id="force" class="form-input" placeholder="Ingresa la fuerza en Newtons">
+                    <div class="unit-display">
+                        <span class="unit-label">Unidad:</span>
+                        <span class="unit-value">N (Newtons)</span>
+                    </div>
+                    <p class="param-description">La fuerza aplicada al objeto en movimiento</p>
+                </div>
+
+                <div class="parameter-group">
+                    <label for="distance">
+                        Distancia (d)
+                        <span class="param-help">?</span>
+                    </label>
+                    <input type="number" id="distance" class="form-input" placeholder="Ingresa la distancia en metros">
+                    <div class="unit-display">
+                        <span class="unit-label">Unidad:</span>
+                        <span class="unit-value">m (metros)</span>
+                    </div>
+                    <p class="param-description">La distancia recorrida por el objeto</p>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-calculator"></i>
+                        Calcular
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fas fa-trash"></i>
+                        Limpiar
+                    </button>
+                    <button class="btn btn-success">
+                        <i class="fas fa-save"></i>
+                        Guardar
+                    </button>
+                </div>
+
+                <!-- Result Container -->
+                <div class="result-container">
+                    <div class="result-main">
+                        <h3>Resultado</h3>
+                        <div class="result-explanation">
+                            El trabajo realizado es: <strong>150 J</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theory Content -->
+            <div class="theory-content">
+                <h3>Sección de Teoría con Imágenes</h3>
+                
+                <div class="theory-section">
+                    <h4>Trabajo de una Fuerza Constante</h4>
+                    <p><strong>Fórmula:</strong> W = F × d × cos(θ)</p>
+                    <p><strong>Unidades:</strong> J (Joules)</p>
+                    <p>El trabajo es la cantidad de energía transferida por una fuerza cuando mueve un objeto.</p>
+                    <img src="images/trabajo_simple.svg" alt="Trabajo de fuerza" class="theory-image">
+                </div>
+                
+                <div class="theory-section">
+                    <h4>Energía Cinética</h4>
+                    <p><strong>Fórmula:</strong> Ec = ½mv²</p>
+                    <p><strong>Unidades:</strong> J (Joules)</p>
+                    <p>La energía cinética es la energía que posee un objeto debido a su movimiento.</p>
+                    <img src="images/energia_cinetica_new.svg" alt="Energía cinética" class="theory-image">
+                </div>
+                
+                <div class="theory-section">
+                    <h4>Energía Potencial</h4>
+                    <p><strong>Fórmula:</strong> Ep = mgh</p>
+                    <p><strong>Unidades:</strong> J (Joules)</p>
+                    <p>La energía potencial gravitatoria es la energía almacenada en un objeto debido a su posición.</p>
+                    <img src="images/energia_potencial.svg" alt="Energía potencial" class="theory-image">
+                </div>
+
+                <div class="theory-section">
+                    <h4>Trabajo con Ángulo</h4>
+                    <p><strong>Fórmula:</strong> W = F × d × cos(θ)</p>
+                    <p><strong>Unidades:</strong> J (Joules)</p>
+                    <p>Cuando la fuerza no está en la misma dirección que el movimiento, se debe considerar el ángulo.</p>
+                    <img src="images/trabajo_angulo.svg" alt="Trabajo con ángulo" class="theory-image">
+                </div>
+
+                <div class="theory-section">
+                    <h4>Conservación de la Energía</h4>
+                    <p><strong>Principio:</strong> La energía no se crea ni se destruye, solo se transforma</p>
+                    <p><strong>Fórmula:</strong> E₁ = E₂ (energía inicial = energía final)</p>
+                    <p>Este principio fundamental establece que la energía total de un sistema cerrado permanece constante.</p>
+                    <img src="images/conservacion_energia.svg" alt="Conservación de energía" class="theory-image">
+                </div>
+            </div>
+
+            <!-- Test de colores para diferentes elementos -->
+            <div class="form-section">
+                <h3>Prueba de Elementos de Texto</h3>
+                <p>Este es un párrafo normal que debe ser fácil de leer.</p>
+                <p class="text-muted">Este es texto atenuado que debe seguir siendo legible.</p>
+                <a href="#">Este es un enlace que debe ser visible</a>
+                <h4>Este es un subtítulo</h4>
+                <ul>
+                    <li>Elemento de lista 1</li>
+                    <li>Elemento de lista 2</li>
+                    <li><strong>Elemento resaltado</strong></li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Script básico para prueba
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página de prueba de colores cargada correctamente');
+            
+            // Test de carga de imágenes
+            const images = document.querySelectorAll('.theory-image');
+            images.forEach((img, index) => {
+                img.onload = function() {
+                    console.log(`Imagen ${index + 1} cargada: ${img.src}`);
+                };
+                img.onerror = function() {
+                    console.error(`Error cargando imagen ${index + 1}: ${img.src}`);
+                    img.style.display = 'none';
+                    // Crear elemento de fallback
+                    const fallback = document.createElement('div');
+                    fallback.style.cssText = `
+                        padding: 2rem;
+                        background: linear-gradient(135deg, #4285f4, #34a853);
+                        color: white;
+                        text-align: center;
+                        border-radius: 15px;
+                        font-family: 'Orbitron', monospace;
+                        margin: 1rem 0;
+                    `;
+                    fallback.innerHTML = `📊 Imagen: ${img.alt}`;
+                    img.parentNode.insertBefore(fallback, img);
+                };
+            });
+        });
+    </script>
+</body>
+</html>

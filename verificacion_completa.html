@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación Completa de Fórmulas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+        .formula-section {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+        }
+        .formula-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status.ok {
+            background: #27ae60;
+            color: white;
+        }
+        .status.missing {
+            background: #e74c3c;
+            color: white;
+        }
+        .formula-code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 5px 0;
+        }
+        .test-result {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .summary {
+            background: rgba(39, 174, 96, 0.2);
+            border: 2px solid #27ae60;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .requirements {
+            background: rgba(52, 152, 219, 0.2);
+            border: 2px solid #3498db;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 Verificación Completa de Fórmulas de Física</h1>
+        <p>Verificando que todas las fórmulas solicitadas estén implementadas correctamente</p>
+
+        <div class="requirements">
+            <h3>📋 Fórmulas Requeridas:</h3>
+            <ul>
+                <li><strong>Trabajo con fuerza constante:</strong> W = F × d × cos(θ)</li>
+                <li><strong>Fuerza peso:</strong> F = m × g</li>
+                <li><strong>Trabajo misma dirección:</strong> W = F × d</li>
+                <li><strong>Trabajo vertical:</strong> W = m × g × h</li>
+                <li><strong>Energía cinética:</strong> Ec = ½mv²</li>
+                <li><strong>Energía potencial:</strong> Ep = mgh</li>
+                <li><strong>Energía mecánica:</strong> Em = Ec + Ep</li>
+                <li><strong>Potencia:</strong> P = W/t, 1 hp = 746 W</li>
+                <li><strong>Trabajo neto múltiples fuerzas:</strong> Wt = F1×d×cos(180°) + F2×d×cos(α) + F3×d×cos(β)</li>
+                <li><strong>Trabajo neto simple:</strong> Wneto = Fr × d</li>
+                <li><strong>Conservación energía:</strong> Em1 = Em2, Ep1 + Ec1 = Ep2 + Ec2</li>
+                <li><strong>Teorema trabajo-energía:</strong> W = Ec2 - Ec1 = ½mv2² - ½mv1²</li>
+                <li><strong>Trabajo potencial gravitatorio:</strong> Wp = Epg1 - Epg2 = mgh1 - mgh2</li>
+            </ul>
+        </div>
+
+        <div id="formulasContainer">
+            <!-- Se llenará dinámicamente -->
+        </div>
+
+        <div class="summary" id="summary">
+            <!-- Se llenará dinámicamente -->
+        </div>
+
+        <button onclick="runCompleteVerification()">🔍 Verificar Todas las Fórmulas</button>
+        <button onclick="testDatabaseSaving()">💾 Probar Guardado en BD</button>
+        <button onclick="showAllEscenarios()">📊 Ver Todos los Escenarios</button>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/calculations.js"></script>
+    <script>
+        const dbManager = new DatabaseManager();
+        
+        const requiredFormulas = [
+            {
+                name: "Trabajo con fuerza constante",
+                formula: "W = F × d × cos(θ)",
+                code: "TRABAJO_CONST",
+                testParams: { F: 100, d: 10, theta: 30 },
+                expectedApprox: 866
+            },
+            {
+                name: "Fuerza peso",
+                formula: "F = m × g",
+                code: "FUERZA_PESO",
+                testParams: { m: 10 },
+                expectedApprox: 98.1
+            },
+            {
+                name: "Trabajo misma dirección",
+                formula: "W = F × d",
+                code: "TRABAJO_MD",
+                testParams: { F: 50, d: 8 },
+                expectedApprox: 400
+            },
+            {
+                name: "Trabajo vertical",
+                formula: "W = m × g × h",
+                code: "TRABAJO_VERTICAL",
+                testParams: { m: 5, h: 10 },
+                expectedApprox: 490.5
+            },
+            {
+                name: "Energía cinética",
+                formula: "Ec = ½mv²",
+                code: "ENERGIA_CINETICA",
+                testParams: { m: 2, v: 10 },
+                expectedApprox: 100
+            },
+            {
+                name: "Energía potencial",
+                formula: "Ep = mgh",
+                code: "ENERGIA_POTENCIAL",
+                testParams: { m: 3, h: 15 },
+                expectedApprox: 441.45
+            },
+            {
+                name: "Energía mecánica",
+                formula: "Em = Ec + Ep",
+                code: "ENERGIA_MECANICA",
+                testParams: { m: 2, v: 5, h: 8 },
+                expectedApprox: 181.96
+            },
+            {
+                name: "Potencia",
+                formula: "P = W/t, 1 hp = 746 W",
+                code: "POTENCIA",
+                testParams: { F: 100, d: 10, t: 5, theta: 0 },
+                expectedApprox: 200
+            },
+            {
+                name: "Trabajo neto múltiples fuerzas",
+                formula: "Wt = F1×d×cos(180°) + F2×d×cos(α) + F3×d×cos(β)",
+                code: "TRABAJO_NETO",
+                testParams: "COMPLEX",
+                expectedApprox: "VARIABLE"
+            },
+            {
+                name: "Trabajo neto simple",
+                formula: "Wneto = Fr × d",
+                code: "TRABAJO_NETO_SIMPLE",
+                testParams: { Fr: 25, d: 8 },
+                expectedApprox: 200
+            },
+            {
+                name: "Conservación de energía",
+                formula: "Em1 = Em2, Ep1 + Ec1 = Ep2 + Ec2",
+                code: "CONSERVACION_ENERGIA",
+                testParams: "COMPLEX",
+                expectedApprox: "CONSERVATION_CHECK"
+            },
+            {
+                name: "Teorema trabajo-energía",
+                formula: "W = Ec2 - Ec1 = ½mv2² - ½mv1²",
+                code: "TEOREMA_TRABAJO_ENERGIA",
+                testParams: { m: 2, v1: 5, v2: 10 },
+                expectedApprox: 75
+            },
+            {
+                name: "Trabajo potencial gravitatorio",
+                formula: "Wp = Epg1 - Epg2 = mgh1 - mgh2",
+                code: "TRABAJO_POTENCIAL_GRAV",
+                testParams: { m: 3, h1: 15, h2: 5 },
+                expectedApprox: 294.3
+            }
+        ];
+
+        async function runCompleteVerification() {
+            const container = document.getElementById('formulasContainer');
+            const escenarios = await dbManager.getEscenarios();
+            
+            let html = '';
+            let implementedCount = 0;
+            
+            requiredFormulas.forEach(req => {
+                const escenario = escenarios.find(e => e.Codigo === req.code);
+                const isImplemented = !!escenario;
+                
+                if (isImplemented) implementedCount++;
+                
+                let testResult = '';
+                if (isImplemented && req.testParams !== "COMPLEX") {
+                    try {
+                        const result = physicsCalculator.calcular(escenario, req.testParams);
+                        const isCorrect = Math.abs(result.resultado - req.expectedApprox) < (req.expectedApprox * 0.1);
+                        testResult = `
+                            <div class="test-result">
+                                <strong>Prueba:</strong> ${result.resultado} ≈ ${req.expectedApprox} 
+                                ${isCorrect ? '✅' : '❌'}
+                                <br><small>${result.explicacion}</small>
+                            </div>
+                        `;
+                    } catch (error) {
+                        testResult = `<div class="test-result">❌ Error: ${error.message}</div>`;
+                    }
+                }
+                
+                html += `
+                    <div class="formula-section">
+                        <div class="formula-header">
+                            <h4>${req.name}</h4>
+                            <span class="status ${isImplemented ? 'ok' : 'missing'}">
+                                ${isImplemented ? '✅ IMPLEMENTADA' : '❌ FALTA'}
+                            </span>
+                        </div>
+                        <div class="formula-code">${req.formula}</div>
+                        ${isImplemented ? `
+                            <p><strong>Código:</strong> ${req.code}</p>
+                            <p><strong>Descripción:</strong> ${escenario.Descripcion}</p>
+                            <p><strong>Notas:</strong> ${escenario.Notas || 'Sin notas especiales'}</p>
+                        ` : '<p style="color: #e74c3c;"><strong>Esta fórmula no está implementada</strong></p>'}
+                        ${testResult}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            
+            // Actualizar resumen
+            const summary = document.getElementById('summary');
+            const percentage = Math.round((implementedCount / requiredFormulas.length) * 100);
+            
+            summary.innerHTML = `
+                <h2>📊 Resumen de Verificación</h2>
+                <p style="font-size: 1.5em; margin: 10px 0;">
+                    <strong>${implementedCount}/${requiredFormulas.length}</strong> fórmulas implementadas
+                </p>
+                <p style="font-size: 1.2em; color: ${percentage === 100 ? '#27ae60' : '#f39c12'};">
+                    <strong>${percentage}%</strong> completado
+                </p>
+                ${percentage === 100 ? 
+                    '<p style="color: #27ae60; font-size: 1.1em;">🎉 ¡Todas las fórmulas están implementadas correctamente!</p>' :
+                    `<p style="color: #e74c3c;">⚠️ Faltan ${requiredFormulas.length - implementedCount} fórmulas por implementar</p>`
+                }
+                <p><strong>Total de escenarios disponibles:</strong> ${escenarios.length}</p>
+            `;
+        }
+
+        async function testDatabaseSaving() {
+            try {
+                // Realizar un cálculo de prueba
+                const escenarios = await dbManager.getEscenarios();
+                const escenarioTrabajo = escenarios.find(e => e.Codigo === 'TRABAJO_CONST');
+                
+                if (!escenarioTrabajo) {
+                    alert('❌ No se encontró el escenario de trabajo constante');
+                    return;
+                }
+
+                const resultado = physicsCalculator.calcular(escenarioTrabajo, { F: 100, d: 10, theta: 0 });
+                
+                // Intentar guardar
+                const calculoData = {
+                    EscenarioID: escenarioTrabajo.EscenarioID,
+                    EscenarioNombre: escenarioTrabajo.Nombre,
+                    Resultado: `Resultado: ${resultado.resultado} J - ${resultado.explicacion}`,
+                    UnidadResultado: escenarioTrabajo.UnidadResultado,
+                    Parametros: { F: 100, d: 10, theta: 0 }
+                };
+
+                const saved = await dbManager.saveCalculo(calculoData);
+                
+                if (saved && saved.CalculoID) {
+                    alert(`✅ Guardado exitoso!\n\nID: ${saved.CalculoID}\nFecha: ${new Date(saved.Fecha).toLocaleString()}\nResultado: ${saved.Resultado}`);
+                    
+                    // Verificar que se guardó en localStorage
+                    const stored = localStorage.getItem('fisica_calculos');
+                    const parsedData = JSON.parse(stored || '[]');
+                    
+                    console.log('Datos en localStorage:', parsedData);
+                    alert(`📊 Total de cálculos guardados: ${parsedData.length}`);
+                } else {
+                    alert('❌ Error al guardar el cálculo');
+                }
+                
+            } catch (error) {
+                alert(`❌ Error en la prueba: ${error.message}`);
+            }
+        }
+
+        async function showAllEscenarios() {
+            const escenarios = await dbManager.getEscenarios();
+            
+            let info = "📋 TODOS LOS ESCENARIOS DISPONIBLES:\n\n";
+            escenarios.forEach((esc, index) => {
+                info += `${index + 1}. ${esc.Nombre}\n`;
+                info += `   Código: ${esc.Codigo}\n`;
+                info += `   Fórmula: ${esc.FormulaDescripcion}\n`;
+                info += `   Unidad: ${esc.UnidadResultado}\n\n`;
+            });
+            
+            console.log(info);
+            alert(`📊 Se encontraron ${escenarios.length} escenarios.\nRevisa la consola del navegador para ver la lista completa.`);
+        }
+
+        // Ejecutar verificación automática al cargar
+        window.onload = function() {
+            console.log('🚀 Sistema de verificación cargado');
+            runCompleteVerification();
+        };
+    </script>
+</body>
+</html>

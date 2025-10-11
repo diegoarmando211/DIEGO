@@ -1,0 +1,61 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .vector-text { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .kinetic-object { fill: #e74c3c; stroke: #c0392b; stroke-width: 2; }
+      .velocity-vector { stroke: #3498db; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+      .motion-trail { stroke: #3498db; stroke-width: 2; fill: none; stroke-dasharray: 5,5; opacity: 0.6; }
+      .energy-glow { fill: url(#energyGradient); opacity: 0.3; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7, 1 3.5" fill="#3498db" />
+    </marker>
+    <defs>
+      <radialGradient id="energyGradient" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" style="stop-color:#f1c40f;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#f39c12;stop-opacity:0" />
+      </radialGradient>
+    </defs>
+  </defs>
+  
+  <!-- Título -->
+  <text x="200" y="20" text-anchor="middle" class="vector-text" style="font-size: 16px; font-weight: bold;">
+    Energía Cinética
+  </text>
+  
+  <!-- Rastro de movimiento -->
+  <path d="M 50 100 Q 150 80 250 100 T 350 100" class="motion-trail"/>
+  
+  <!-- Resplandor de energía -->
+  <circle cx="200" cy="100" r="40" class="energy-glow"/>
+  
+  <!-- Objeto en movimiento (pelota) -->
+  <circle cx="200" cy="100" r="20" class="kinetic-object"/>
+  
+  <!-- Vector velocidad -->
+  <line x1="220" y1="100" x2="280" y2="100" class="velocity-vector"/>
+  <text x="290" y="105" class="vector-text" style="font-weight: bold;">v</text>
+  
+  <!-- Líneas de velocidad (efectos visuales) -->
+  <line x1="170" y1="95" x2="190" y2="95" stroke="#3498db" stroke-width="2" opacity="0.7"/>
+  <line x1="165" y1="100" x2="190" y2="100" stroke="#3498db" stroke-width="2" opacity="0.5"/>
+  <line x1="170" y1="105" x2="190" y2="105" stroke="#3498db" stroke-width="2" opacity="0.7"/>
+  
+  <!-- Masa -->
+  <text x="190" y="110" class="vector-text" text-anchor="middle" style="font-weight: bold;">m</text>
+  
+  <!-- Fórmula principal -->
+  <text x="200" y="50" text-anchor="middle" class="vector-text" style="font-size: 18px; font-weight: bold; fill: #e74c3c;">
+    Ec = ½mv²
+  </text>
+  
+  <!-- Descripción -->
+  <text x="50" y="160" class="vector-text">Energía asociada al movimiento del objeto</text>
+  <text x="50" y="175" class="vector-text">m = masa del objeto (kg)</text>
+  <text x="50" y="190" class="vector-text">v = velocidad del objeto (m/s)</text>
+  
+  <!-- Valores de ejemplo -->
+  <text x="280" y="160" class="vector-text" style="fill: #27ae60;">Ejemplo:</text>
+  <text x="280" y="175" class="vector-text" style="fill: #27ae60;">m = 2 kg, v = 10 m/s</text>
+  <text x="280" y="190" class="vector-text" style="fill: #27ae60;">Ec = ½ × 2 × 10² = 100 J</text>
+</svg>

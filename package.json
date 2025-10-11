@@ -1,0 +1,29 @@
+{
+  "name": "physicslab-pro",
+  "version": "1.0.0",
+  "description": "PhysicsLab Pro - La calculadora de física más avanzada del universo",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diegoarmando211/DIEGO.git"
+  },
+  "keywords": [
+    "physics",
+    "calculator",
+    "education",
+    "science",
+    "formulas",
+    "pwa"
+  ],
+  "author": "Diego",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,63 @@
+<svg width="400" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .vector-text { font-family: Arial, sans-serif; font-size: 14px; fill: #333; }
+      .simple-force { stroke: #e74c3c; stroke-width: 4; fill: none; marker-end: url(#arrowhead); }
+      .displacement { stroke: #27ae60; stroke-width: 4; fill: none; marker-end: url(#arrowhead2); }
+      .object { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+      .ground { fill: #95a5a6; stroke: #7f8c8d; stroke-width: 1; }
+      .work-area { fill: #f39c12; opacity: 0.3; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7, 1 3.5" fill="#e74c3c" />
+    </marker>
+    <marker id="arrowhead2" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7, 1 3.5" fill="#27ae60" />
+    </marker>
+  </defs>
+  
+  <!-- Título -->
+  <text x="200" y="25" text-anchor="middle" class="vector-text" style="font-size: 16px; font-weight: bold;">
+    Trabajo en la Misma Dirección
+  </text>
+  
+  <!-- Superficie -->
+  <rect x="50" y="130" width="300" height="20" class="ground"/>
+  
+  <!-- Área de trabajo (representación visual) -->
+  <polygon points="80,110 320,110 320,130 80,130" class="work-area"/>
+  
+  <!-- Objeto (caja) -->
+  <rect x="80" y="110" width="30" height="20" class="object"/>
+  <text x="95" y="125" class="vector-text" text-anchor="middle" style="fill: white; font-weight: bold;">m</text>
+  
+  <!-- Posición final del objeto (fantasma) -->
+  <rect x="290" y="110" width="30" height="20" class="object" style="opacity: 0.3; stroke-dasharray: 3,3;"/>
+  
+  <!-- Vector fuerza -->
+  <line x1="110" y1="120" x2="180" y2="120" class="simple-force"/>
+  <text x="145" y="115" class="vector-text" style="font-weight: bold;">F</text>
+  
+  <!-- Vector desplazamiento -->
+  <line x1="95" y1="95" x2="305" y2="95" class="displacement"/>
+  <text x="200" y="90" class="vector-text" style="font-weight: bold;">d</text>
+  
+  <!-- Líneas auxiliares -->
+  <line x1="95" y1="110" x2="95" y2="100" stroke="#666" stroke-width="1"/>
+  <line x1="305" y1="110" x2="305" y2="100" stroke="#666" stroke-width="1"/>
+  
+  <!-- Fórmula simplificada -->
+  <text x="200" y="55" text-anchor="middle" class="vector-text" style="font-size: 18px; font-weight: bold; fill: #e74c3c;">
+    W = F × d
+  </text>
+  
+  <!-- Explicación -->
+  <text x="60" y="170" class="vector-text">Cuando la fuerza y el desplazamiento van en la misma dirección:</text>
+  <text x="60" y="185" class="vector-text">• El ángulo θ = 0°, por lo que cos(θ) = 1</text>
+  <text x="60" y="200" class="vector-text">• La fórmula se simplifica: W = F × d × cos(0°) = F × d × 1 = F × d</text>
+  
+  <!-- Indicador de dirección -->
+  <text x="200" y="140" text-anchor="middle" class="vector-text" style="font-size: 12px; font-style: italic;">
+    Fuerza y desplazamiento en la misma dirección
+  </text>
+</svg>
