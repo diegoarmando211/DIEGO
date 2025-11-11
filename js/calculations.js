@@ -81,20 +81,6 @@ class PhysicsCalculator {
     }
 
     // Energía potencial: Ep = m * g * h
-    calcularEnergiaPotencial(masa, altura) {
-        const resultado = masa * this.g * altura;
-        
-        return {
-            resultado: parseFloat(resultado.toFixed(4)),
-            explicacion: `Ep = ${masa} kg × ${this.g} m/s² × ${altura} m = ${resultado.toFixed(4)} J`,
-            pasos: [
-                `La energía potencial gravitatoria depende de la altura`,
-                `Ep = m × g × h`,
-                `Ep = ${masa} × ${this.g} × ${altura} = ${resultado.toFixed(4)} J`
-            ]
-        };
-    }
-
     // Energía mecánica: Em = Ec + Ep
     calcularEnergiaMecanica(masa, velocidad, altura) {
         const ec = 0.5 * masa * Math.pow(velocidad, 2);
@@ -113,13 +99,12 @@ class PhysicsCalculator {
     }
 
     // Potencia: P = (F * d * cos(theta)) / t
-    calcularPotencia(fuerza, distancia, tiempo, angulo) {
+    // Potencia: P = W/t
+    calcularPotencia(trabajo, tiempo) {
         if (tiempo === 0) {
             throw new Error('El tiempo no puede ser cero');
         }
         
-        const anguloRad = (angulo * Math.PI) / 180;
-        const trabajo = fuerza * distancia * Math.cos(anguloRad);
         const resultado = trabajo / tiempo;
         
         // Obtener conversiones
@@ -127,16 +112,54 @@ class PhysicsCalculator {
         
         return {
             resultado: parseFloat(resultado.toFixed(4)),
-            explicacion: `P = (${fuerza} N × ${distancia} m × cos(${angulo}°)) / ${tiempo} s = ${resultado.toFixed(4)} W`,
+            explicacion: `P = ${trabajo} J / ${tiempo} s = ${resultado.toFixed(4)} W`,
             pasos: [
-                `Primero calcular el trabajo: W = F × d × cos(θ)`,
-                `W = ${fuerza} × ${distancia} × cos(${angulo}°) = ${trabajo.toFixed(4)} J`,
-                `Luego calcular la potencia: P = W / t`,
-                `P = ${trabajo.toFixed(4)} / ${tiempo} = ${resultado.toFixed(4)} W`,
+                `La potencia es el trabajo dividido por el tiempo`,
+                `P = W / t`,
+                `P = ${trabajo} / ${tiempo} = ${resultado.toFixed(4)} W`,
                 `Conversiones: ${conversiones.conversiones.enHP}, ${conversiones.conversiones.enKW}`,
                 `Nota: ${conversiones.conversiones.nota}`
             ],
             conversiones: conversiones
+        };
+    }
+
+    // Potencia instantánea: Pi = F × V × cos(θ)
+    calcularPotenciaInstantanea(fuerza, velocidad, angulo) {
+        const anguloRad = (angulo * Math.PI) / 180;
+        const resultado = fuerza * velocidad * Math.cos(anguloRad);
+        
+        // Obtener conversiones
+        const conversiones = this.mostrarConversionesPotencia(resultado);
+        
+        return {
+            resultado: parseFloat(resultado.toFixed(4)),
+            explicacion: `Pi = ${fuerza} N × ${velocidad} m/s × cos(${angulo}°) = ${resultado.toFixed(4)} W`,
+            pasos: [
+                `La potencia instantánea relaciona fuerza, velocidad y ángulo`,
+                `Pi = F × V × cos(θ)`,
+                `cos(${angulo}°) = ${Math.cos(anguloRad).toFixed(4)}`,
+                `Pi = ${fuerza} × ${velocidad} × ${Math.cos(anguloRad).toFixed(4)} = ${resultado.toFixed(4)} W`,
+                `Conversiones: ${conversiones.conversiones.enHP}, ${conversiones.conversiones.enKW}`,
+                `Nota: ${conversiones.conversiones.nota}`
+            ],
+            conversiones: conversiones
+        };
+    }
+
+    // Relación Energía y Potencia: E = P × T
+    calcularEnergiaPotencia(potencia, tiempo) {
+        const resultado = potencia * tiempo;
+        
+        return {
+            resultado: parseFloat(resultado.toFixed(4)),
+            explicacion: `E = ${potencia} W × ${tiempo} s = ${resultado.toFixed(4)} J`,
+            pasos: [
+                `La energía es el producto de la potencia por el tiempo`,
+                `E = P × T`,
+                `E = ${potencia} × ${tiempo} = ${resultado.toFixed(4)} J`,
+                `Esta es la energía total transferida durante ${tiempo} segundos`
+            ]
         };
     }
 
@@ -172,12 +195,6 @@ class PhysicsCalculator {
                         parametros.v
                     );
 
-                case 'ENERGIA_POTENCIAL':
-                    return this.calcularEnergiaPotencial(
-                        parametros.m, 
-                        parametros.h
-                    );
-
                 case 'ENERGIA_MECANICA':
                     return this.calcularEnergiaMecanica(
                         parametros.m, 
@@ -187,22 +204,13 @@ class PhysicsCalculator {
 
                 case 'POTENCIA':
                     return this.calcularPotencia(
-                        parametros.F, 
-                        parametros.d, 
-                        parametros.t, 
-                        parametros.theta
+                        parametros.W, 
+                        parametros.t
                     );
 
                 case 'TRABAJO_NETO':
                     return this.calcularTrabajoNeto(
-                        parametros.fuerzas, 
-                        parametros.d
-                    );
-
-                case 'TRABAJO_NETO_SIMPLE':
-                    return this.calcularTrabajoNetoSimple(
-                        parametros.Fr, 
-                        parametros.d
+                        parametros.fuerzas
                     );
 
                 case 'CONSERVACION_ENERGIA':
@@ -223,6 +231,19 @@ class PhysicsCalculator {
                         parametros.m, 
                         parametros.h1, 
                         parametros.h2
+                    );
+
+                case 'POTENCIA_INSTANTANEA':
+                    return this.calcularPotenciaInstantanea(
+                        parametros.F,
+                        parametros.V,
+                        parametros.theta
+                    );
+
+                case 'ENERGIA_POTENCIA':
+                    return this.calcularEnergiaPotencia(
+                        parametros.P,
+                        parametros.T
                     );
 
                 default:
@@ -318,62 +339,38 @@ class PhysicsCalculator {
     }
 
     // Trabajo neto o total con múltiples fuerzas: Wt = F1×d×cos(180°) + F2×d×cos(α) + F3×d×cos(β)
-    calcularTrabajoNeto(fuerzas, distancia) {
+    // Trabajo resultante con múltiples fuerzas: Tr = F1×d1×cos(θ1) + F2×d2×cos(θ2) + F3×d3×cos(θ3) + ...
+    calcularTrabajoNeto(fuerzas) {
         let trabajoTotal = 0;
         let explicacionPartes = [];
         let pasos = ['Calculando el trabajo de cada fuerza:'];
 
         fuerzas.forEach((fuerza, index) => {
             const anguloRad = (fuerza.angulo * Math.PI) / 180;
-            const trabajoIndividual = fuerza.magnitud * distancia * Math.cos(anguloRad);
+            const trabajoIndividual = fuerza.magnitud * fuerza.distancia * Math.cos(anguloRad);
             trabajoTotal += trabajoIndividual;
             
-            explicacionPartes.push(`F${index + 1} × d × cos(${fuerza.angulo}°) = ${fuerza.magnitud} × ${distancia} × ${Math.cos(anguloRad).toFixed(4)} = ${trabajoIndividual.toFixed(4)} J`);
-            pasos.push(`Fuerza ${index + 1}: W${index + 1} = ${fuerza.magnitud} × ${distancia} × cos(${fuerza.angulo}°) = ${trabajoIndividual.toFixed(4)} J`);
+            explicacionPartes.push(`F${index + 1} × d${index + 1} × cos(θ${index + 1}) = ${fuerza.magnitud} × ${fuerza.distancia} × ${Math.cos(anguloRad).toFixed(4)} = ${trabajoIndividual.toFixed(4)} J`);
+            pasos.push(`Fuerza ${index + 1}: T${index + 1} = ${fuerza.magnitud} N × ${fuerza.distancia} m × cos(${fuerza.angulo}°) = ${trabajoIndividual.toFixed(4)} J`);
         });
 
-        pasos.push(`Trabajo total: Wt = ${explicacionPartes.join(' + ')}`);
-        pasos.push(`Wt = ${trabajoTotal.toFixed(4)} J`);
+        pasos.push(`Trabajo resultante: Tr = ${explicacionPartes.join(' + ')}`);
+        pasos.push(`Tr = ${trabajoTotal.toFixed(4)} J`);
 
         // Análisis del movimiento
         let tipoMovimiento = '';
         if (trabajoTotal > 0) {
-            tipoMovimiento = 'Movimiento acelerado (Wt > 0)';
+            tipoMovimiento = 'Movimiento acelerado (Tr > 0)';
         } else if (trabajoTotal === 0) {
-            tipoMovimiento = 'Movimiento uniforme o cuerpo en reposo (Wt = 0)';
+            tipoMovimiento = 'Movimiento uniforme o cuerpo en reposo (Tr = 0)';
         } else {
-            tipoMovimiento = 'Movimiento retardado/desacelerado (Wt < 0)';
+            tipoMovimiento = 'Movimiento retardado/desacelerado (Tr < 0)';
         }
 
         return {
             resultado: parseFloat(trabajoTotal.toFixed(4)),
-            explicacion: `Wt = ${explicacionPartes.join(' + ')} = ${trabajoTotal.toFixed(4)} J`,
+            explicacion: `Tr = ${explicacionPartes.join(' + ')} = ${trabajoTotal.toFixed(4)} J`,
             pasos: pasos,
-            analisis: tipoMovimiento
-        };
-    }
-
-    // Trabajo neto con fuerza resultante: Wneto = Fr × d
-    calcularTrabajoNetoSimple(fuerzaResultante, distancia) {
-        const resultado = fuerzaResultante * distancia;
-        
-        let tipoMovimiento = '';
-        if (resultado > 0) {
-            tipoMovimiento = 'Movimiento acelerado (Wneto > 0)';
-        } else if (resultado === 0) {
-            tipoMovimiento = 'Movimiento uniforme o cuerpo en reposo (Wneto = 0)';
-        } else {
-            tipoMovimiento = 'Movimiento retardado/desacelerado (Wneto < 0)';
-        }
-
-        return {
-            resultado: parseFloat(resultado.toFixed(4)),
-            explicacion: `Wneto = Fr × d = ${fuerzaResultante} N × ${distancia} m = ${resultado.toFixed(4)} J`,
-            pasos: [
-                `Fuerza resultante: Fr = ${fuerzaResultante} N`,
-                `Distancia: d = ${distancia} m`,
-                `Trabajo neto: Wneto = Fr × d = ${fuerzaResultante} × ${distancia} = ${resultado.toFixed(4)} J`
-            ],
             analisis: tipoMovimiento
         };
     }
@@ -470,12 +467,6 @@ class PhysicsCalculator {
                 descripcion: 'Calcula la energía asociada al movimiento de un objeto.',
                 aplicaciones: ['Vehículos en movimiento', 'Proyectiles', 'Objetos en caída libre']
             },
-            'ENERGIA_POTENCIAL': {
-                nombre: 'Energía Potencial Gravitatoria',
-                formula: 'Ep = mgh',
-                descripcion: 'Calcula la energía almacenada debido a la posición de un objeto en un campo gravitatorio.',
-                aplicaciones: ['Objetos elevados', 'Presas hidroeléctricas', 'Montañas rusas']
-            },
             'TRABAJO_NETO': {
                 nombre: 'Trabajo Neto o Total',
                 formula: 'Wt = F1×d×cos(180°) + F2×d×cos(α) + F3×d×cos(β)',
@@ -499,6 +490,18 @@ class PhysicsCalculator {
                 formula: 'Wp = Epg1 - Epg2 = mgh1 - mgh2',
                 descripcion: 'Trabajo realizado por o contra la fuerza gravitatoria cuando un objeto cambia de altura.',
                 aplicaciones: ['Elevadores', 'Objetos en caída', 'Trabajo contra la gravedad']
+            },
+            'POTENCIA_INSTANTANEA': {
+                nombre: 'Potencia Instantánea',
+                formula: 'Pi = F × V × cos(θ)',
+                descripcion: 'Calcula la potencia instantánea a partir de la fuerza, velocidad y el ángulo entre ambas.',
+                aplicaciones: ['Vehículos en movimiento', 'Maquinaria industrial', 'Análisis de rendimiento']
+            },
+            'ENERGIA_POTENCIA': {
+                nombre: 'Relación Energía y Potencia',
+                formula: 'E = P × T',
+                descripcion: 'Calcula la energía total a partir de la potencia aplicada durante un tiempo determinado.',
+                aplicaciones: ['Consumo eléctrico', 'Almacenamiento de energía', 'Eficiencia energética']
             }
         };
 

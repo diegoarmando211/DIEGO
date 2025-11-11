@@ -4,7 +4,7 @@ class DatabaseSimulator {
         this.escenarios = [
             {
                 EscenarioID: 1,
-                Nombre: '🚀 Trabajo Angular - Proyectiles y Vector Fuerza',
+                Nombre: '🚀 Trabajo con angulo',
                 Codigo: 'TRABAJO_CONST',
                 FormulaDescripcion: 'W = F × d × cos(θ)',
                 UnidadResultado: 'J (Joules)',
@@ -18,7 +18,7 @@ class DatabaseSimulator {
             },
             {
                 EscenarioID: 2,
-                Nombre: '🌍 Fuerza Gravitatoria - Peso de la Materia',
+                Nombre: '🌍 Fuerza en newton',
                 Codigo: 'FUERZA_PESO',
                 FormulaDescripcion: 'F = m × g',
                 UnidadResultado: 'N (Newton)',
@@ -43,7 +43,7 @@ class DatabaseSimulator {
             },
             {
                 EscenarioID: 4,
-                Nombre: '🏗️ Trabajo Anti-Gravedad - Elevación de Masas',
+                Nombre: '🏗️ Energia Potencial',
                 Codigo: 'TRABAJO_VERTICAL',
                 FormulaDescripcion: 'W = m × g × h',
                 UnidadResultado: 'J (Joules)',
@@ -56,7 +56,7 @@ class DatabaseSimulator {
             },
             {
                 EscenarioID: 5,
-                Nombre: '💫 Energía del Movimiento - Velocidad Cinética',
+                Nombre: '💫 Energia Cinetica',
                 Codigo: 'ENERGIA_CINETICA',
                 FormulaDescripcion: 'Ec = ½ × m × v²',
                 UnidadResultado: 'J (Joules)',
@@ -65,19 +65,6 @@ class DatabaseSimulator {
                 parametros: [
                     { ParametroID: 9, Nombre: '⚖️ Masa (kg)', Codigo: 'm', Unidad: 'kg', OrdenParametro: 1, Descripcion: 'Masa del objeto en movimiento' },
                     { ParametroID: 10, Nombre: '🏃 Velocidad (m/s)', Codigo: 'v', Unidad: 'm/s', OrdenParametro: 2, Descripcion: 'Velocidad del objeto' }
-                ]
-            },
-            {
-                EscenarioID: 6,
-                Nombre: '⛰️ Energía de Altura - Potencial Gravitatorio',
-                Codigo: 'ENERGIA_POTENCIAL',
-                FormulaDescripcion: 'Ep = m × g × h',
-                UnidadResultado: 'J (Joules)',
-                Descripcion: '🏔️ Energía almacenada debido a la posición del objeto en el campo gravitatorio terrestre.',
-                Notas: '🌍 g = 9.81 m/s² | 📏 h = altura sobre nivel de referencia | 💎 Energía potencial guardada',
-                parametros: [
-                    { ParametroID: 11, Nombre: '⚖️ Masa (kg)', Codigo: 'm', Unidad: 'kg', OrdenParametro: 1, Descripcion: 'Masa del objeto' },
-                    { ParametroID: 12, Nombre: '📏 Altura (m)', Codigo: 'h', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Altura sobre el nivel de referencia' }
                 ]
             },
             {
@@ -96,48 +83,32 @@ class DatabaseSimulator {
             },
             {
                 EscenarioID: 8,
-                Nombre: '⚡ Potencia Desarrollada - Energía por Tiempo',
+                Nombre: '⚡ Potencia',
                 Codigo: 'POTENCIA',
-                FormulaDescripcion: 'P = W/t = (F × d × cos(θ))/t',
+                FormulaDescripcion: 'P = W/t',
                 UnidadResultado: 'W (Watt)',
                 Descripcion: '⏱️ Rapidez con la que se realiza trabajo o se transfiere energía - velocidad energética.',
                 Notas: '🐎 1 hp (caballo de fuerza) = 746 W | ⚡ Potencia = Trabajo / Tiempo',
                 parametros: [
-                    { ParametroID: 16, Nombre: '💪 Fuerza (N)', Codigo: 'F', Unidad: 'N', OrdenParametro: 1, Descripcion: 'Fuerza aplicada' },
-                    { ParametroID: 17, Nombre: '📏 Distancia (m)', Codigo: 'd', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Distancia recorrida' },
-                    { ParametroID: 18, Nombre: '⏱️ Tiempo (s)', Codigo: 't', Unidad: 's', OrdenParametro: 3, Descripcion: 'Tiempo empleado en realizar el trabajo' },
-                    { ParametroID: 19, Nombre: '📐 Ángulo (θ)', Codigo: 'theta', Unidad: 'grados', OrdenParametro: 4, Descripcion: 'Ángulo entre fuerza y desplazamiento' }
+                    { ParametroID: 16, Nombre: '⚡ Trabajo (J)', Codigo: 'W', Unidad: 'J', OrdenParametro: 1, Descripcion: 'Trabajo realizado' },
+                    { ParametroID: 17, Nombre: '⏱️ Tiempo (s)', Codigo: 't', Unidad: 's', OrdenParametro: 2, Descripcion: 'Tiempo empleado en realizar el trabajo' }
                 ]
             },
             {
                 EscenarioID: 9,
-                Nombre: '🎯 Trabajo Resultante - Múltiples Fuerzas Combinadas',
+                Nombre: '🎯 Trabajo Resultante Múltiples Fuerzas',
                 Codigo: 'TRABAJO_NETO',
-                FormulaDescripcion: 'Wt = F1×d×cos(180°) + F2×d×cos(α) + F3×d×cos(β)',
+                FormulaDescripcion: 'Tr = F1×d1×cos(θ1) + F2×d2×cos(θ2) + F3×d3×cos(θ3) + ...',
                 UnidadResultado: 'J (Joules)',
-                Descripcion: '🔀 Trabajo total realizado por múltiples fuerzas actuando simultáneamente sobre un objeto.',
-                Notas: '📈 Si Wt > 0: acelerando | 🟰 Wt = 0: velocidad constante | 📉 Wt < 0: frenando',
+                Descripcion: '🔀 Trabajo total realizado por múltiples fuerzas actuando simultáneamente sobre un objeto con diferentes distancias y ángulos.',
+                Notas: '📈 Si Tr > 0: acelerando | 🟰 Tr = 0: velocidad constante | 📉 Tr < 0: frenando',
                 parametros: [
-                    { ParametroID: 20, Nombre: '🔢 Número de fuerzas', Codigo: 'numFuerzas', Unidad: '', OrdenParametro: 1, Descripcion: 'Cantidad de fuerzas actuando (2-5)' },
-                    { ParametroID: 21, Nombre: '📏 Distancia (m)', Codigo: 'd', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Distancia común para todas las fuerzas' }
-                ]
-            },
-            {
-                EscenarioID: 10,
-                Nombre: '📐 Trabajo Neto Básico - Fuerzas Simples',
-                Codigo: 'TRABAJO_NETO_SIMPLE',
-                FormulaDescripcion: 'Wneto = Fr × d',
-                UnidadResultado: 'J (Joules)',
-                Descripcion: '🎯 Trabajo realizado por la fuerza resultante total sobre un objeto.',
-                Notas: '⚡ Fr = fuerza resultante | 📈 > 0: acelerando | 🟰 = 0: uniforme | 📉 < 0: frenando',
-                parametros: [
-                    { ParametroID: 22, Nombre: '💪 Fuerza resultante (N)', Codigo: 'Fr', Unidad: 'N', OrdenParametro: 1, Descripcion: 'Fuerza neta o resultante total' },
-                    { ParametroID: 23, Nombre: '📏 Distancia (m)', Codigo: 'd', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Distancia recorrida por el objeto' }
+                    { ParametroID: 20, Nombre: '🔢 Número de fuerzas', Codigo: 'numFuerzas', Unidad: '', OrdenParametro: 1, Descripcion: 'Cantidad de fuerzas actuando (2-5)' }
                 ]
             },
             {
                 EscenarioID: 11,
-                Nombre: '♻️ Conservación Energética - Energía Indestructible',
+                Nombre: '♻️ Conservacion de energia',
                 Codigo: 'CONSERVACION_ENERGIA',
                 FormulaDescripcion: 'Em1 = Em2, Ep1 + Ec1 = Ep2 + Ec2',
                 UnidadResultado: 'J (Joules)',
@@ -153,7 +124,7 @@ class DatabaseSimulator {
             },
             {
                 EscenarioID: 12,
-                Nombre: '🧮 Teorema Fundamental - Trabajo = ΔEnergía Cinética',
+                Nombre: '🧮 Teorema de Trabajo - Trabajo Neto',
                 Codigo: 'TEOREMA_TRABAJO_ENERGIA',
                 FormulaDescripcion: 'W = ΔEc = Ec2 - Ec1 = ½mv2² - ½mv1²',
                 UnidadResultado: 'J (Joules)',
@@ -167,7 +138,7 @@ class DatabaseSimulator {
             },
             {
                 EscenarioID: 13,
-                Nombre: '🌌 Trabajo vs Gravedad - Escapar del Campo Gravitatorio',
+                Nombre: '🌌 Trabajo Cambio de Altura - Cambio de Energia Potencial - Trabajo de gravedad',
                 Codigo: 'TRABAJO_POTENCIAL_GRAV',
                 FormulaDescripcion: 'Wp = Epg1 - Epg2 = mgh1 - mgh2',
                 UnidadResultado: 'J (Joules)',
@@ -177,6 +148,33 @@ class DatabaseSimulator {
                     { ParametroID: 32, Nombre: '⚖️ Masa (kg)', Codigo: 'm', Unidad: 'kg', OrdenParametro: 1, Descripcion: 'Masa del objeto' },
                     { ParametroID: 33, Nombre: '📏 Altura inicial (m)', Codigo: 'h1', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Altura inicial del objeto' },
                     { ParametroID: 34, Nombre: '📏 Altura final (m)', Codigo: 'h2', Unidad: 'm', OrdenParametro: 3, Descripcion: 'Altura final del objeto' }
+                ]
+            },
+            {
+                EscenarioID: 14,
+                Nombre: '⚡ Potencia Instantanea',
+                Codigo: 'POTENCIA_INSTANTANEA',
+                FormulaDescripcion: 'Pi = F × V × cos(θ)',
+                UnidadResultado: 'W (Watt)',
+                Descripcion: '⚡ Potencia instantánea calculada a partir de la fuerza, velocidad y el ángulo entre ellas.',
+                Notas: '🔥 Pi = Potencia Instantánea | 💨 V = Velocidad instantánea | 📐 θ = ángulo entre fuerza y velocidad',
+                parametros: [
+                    { ParametroID: 35, Nombre: '💪 Fuerza (N)', Codigo: 'F', Unidad: 'N', OrdenParametro: 1, Descripcion: 'Fuerza aplicada al objeto' },
+                    { ParametroID: 36, Nombre: '💨 Velocidad (m/s)', Codigo: 'V', Unidad: 'm/s', OrdenParametro: 2, Descripcion: 'Velocidad instantánea del objeto' },
+                    { ParametroID: 37, Nombre: '📐 Ángulo (θ)', Codigo: 'theta', Unidad: 'grados', OrdenParametro: 3, Descripcion: 'Ángulo entre la fuerza y la velocidad' }
+                ]
+            },
+            {
+                EscenarioID: 15,
+                Nombre: '🔋 Relación Energia y Potencia',
+                Codigo: 'ENERGIA_POTENCIA',
+                FormulaDescripcion: 'E = P × T',
+                UnidadResultado: 'J (Joules)',
+                Descripcion: '⚡ Energía calculada a partir de la potencia y el tiempo durante el cual se aplica.',
+                Notas: '🔋 E = Energía total | ⚡ P = Potencia en vatios | ⏱️ T = Tiempo en segundos',
+                parametros: [
+                    { ParametroID: 38, Nombre: '⚡ Potencia (W)', Codigo: 'P', Unidad: 'W', OrdenParametro: 1, Descripcion: 'Potencia aplicada' },
+                    { ParametroID: 39, Nombre: '⏱️ Tiempo (s)', Codigo: 'T', Unidad: 's', OrdenParametro: 2, Descripcion: 'Tiempo durante el cual se aplica la potencia' }
                 ]
             }
         ];
