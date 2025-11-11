@@ -45,7 +45,7 @@ class DatabaseSimulator {
                 EscenarioID: 4,
                 Nombre: '🏗️ Energia Potencial',
                 Codigo: 'TRABAJO_VERTICAL',
-                FormulaDescripcion: 'W = m × g × h',
+                FormulaDescripcion: 'Ep = m × g × h',
                 UnidadResultado: 'J (Joules)',
                 Descripcion: '⛰️ Trabajo necesario para vencer la gravedad y elevar un objeto verticalmente.',
                 Notas: '🌍 g = 9.81 m/s² | 📏 h = altura ganada | 💪 Trabajo contra el campo gravitatorio',

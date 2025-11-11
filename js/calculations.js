@@ -49,17 +49,17 @@ class PhysicsCalculator {
         };
     }
 
-    // Trabajo vertical: W = m * g * h
+    // Trabajo vertical: Ep = m * g * h
     calcularTrabajoVertical(masa, altura) {
         const resultado = masa * this.g * altura;
         
         return {
             resultado: parseFloat(resultado.toFixed(4)),
-            explicacion: `W = ${masa} kg × ${this.g} m/s² × ${altura} m = ${resultado.toFixed(4)} J`,
+            explicacion: `Ep = ${masa} kg × ${this.g} m/s² × ${altura} m = ${resultado.toFixed(4)} J`,
             pasos: [
-                `El trabajo para elevar un objeto verticalmente`,
-                `W = m × g × h`,
-                `W = ${masa} × ${this.g} × ${altura} = ${resultado.toFixed(4)} J`
+                `La energía potencial para elevar un objeto verticalmente`,
+                `Ep = m × g × h`,
+                `Ep = ${masa} × ${this.g} × ${altura} = ${resultado.toFixed(4)} J`
             ]
         };
     }
@@ -468,9 +468,9 @@ class PhysicsCalculator {
                 aplicaciones: ['Vehículos en movimiento', 'Proyectiles', 'Objetos en caída libre']
             },
             'TRABAJO_NETO': {
-                nombre: 'Trabajo Neto o Total',
-                formula: 'Wt = F1×d×cos(180°) + F2×d×cos(α) + F3×d×cos(β)',
-                descripcion: 'Calcula el trabajo total realizado por múltiples fuerzas actuando sobre un objeto.',
+                nombre: 'Trabajo Resultante Múltiples Fuerzas',
+                formula: 'Tr = F1×d1×cos(θ1) + F2×d2×cos(θ2) + F3×d3×cos(θ3) + ...',
+                descripcion: 'Calcula el trabajo total realizado por múltiples fuerzas actuando sobre un objeto con diferentes distancias y ángulos variables.',
                 aplicaciones: ['Fuerzas múltiples', 'Análisis de movimiento', 'Sistemas complejos']
             },
             'CONSERVACION_ENERGIA': {
