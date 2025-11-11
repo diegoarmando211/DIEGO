@@ -307,19 +307,6 @@ class UIManager {
                     <option value="5">5 fuerzas</option>
                 </select>
             </div>
-            
-            <div class="parameter-group slide-up">
-                <label for="param_d" class="tooltip" data-tooltip="Distancia común recorrida por todas las fuerzas">
-                    Distancia (m)
-                    <span class="param-help">ⓘ</span>
-                </label>
-                <input type="number" id="param_d" class="form-input" step="any" placeholder="Ingresa distancia" data-codigo="d">
-                <div class="unit-display">
-                    <span class="unit-label">Unidad:</span> 
-                    <span class="unit-value">m</span>
-                    <div class="param-description">Distancia común para todas las fuerzas</div>
-                </div>
-            </div>
 
             <div id="fuerzasContainer" class="fuerzas-container"></div>
         `;
@@ -344,16 +331,20 @@ class UIManager {
                 <h4>Fuerza ${i}</h4>
                 <div class="fuerza-inputs">
                     <div class="input-group">
-                        <label>Magnitud (N)</label>
+                        <label>Magnitud F${i} (N)</label>
                         <input type="number" id="fuerza${i}_magnitud" class="form-input" step="any" 
                                placeholder="Fuerza ${i}" data-fuerza="${i}" data-tipo="magnitud">
                     </div>
                     <div class="input-group">
-                        <label>Ángulo (°)</label>
+                        <label>Distancia d${i} (m)</label>
+                        <input type="number" id="fuerza${i}_distancia" class="form-input" step="any" 
+                               placeholder="Distancia ${i}" data-fuerza="${i}" data-tipo="distancia">
+                    </div>
+                    <div class="input-group">
+                        <label>Ángulo θ${i} (°)</label>
                         <input type="number" id="fuerza${i}_angulo" class="form-input" step="any" 
-                               placeholder="Ángulo ${i}" data-fuerza="${i}" data-tipo="angulo"
-                               value="${i === 1 ? '180' : '0'}">
-                        <small>Sugerencia: F1 suele ser 180° (oposición), otras 0° o ángulos específicos</small>
+                               placeholder="Ángulo ${i}" data-fuerza="${i}" data-tipo="angulo">
+                        <small>Ingresa el ángulo entre la fuerza F${i} y su dirección de movimiento</small>
                     </div>
                 </div>
             `;
@@ -475,31 +466,31 @@ class UIManager {
         // Casos especiales
         if (this.currentScenario.Codigo === 'TRABAJO_NETO') {
             const numFuerzas = document.getElementById('numFuerzas').value;
-            const distancia = document.getElementById('param_d').value;
 
-            if (!numFuerzas || !distancia) {
-                this.showError('Completa todos los campos requeridos');
+            if (!numFuerzas) {
+                this.showError('Selecciona el número de fuerzas');
                 return null;
             }
 
             const fuerzas = [];
             for (let i = 1; i <= parseInt(numFuerzas); i++) {
                 const magnitud = document.getElementById(`fuerza${i}_magnitud`).value;
+                const distancia = document.getElementById(`fuerza${i}_distancia`).value;
                 const angulo = document.getElementById(`fuerza${i}_angulo`).value;
 
-                if (!magnitud || angulo === '') {
-                    this.showError(`Completa los datos de la Fuerza ${i}`);
+                if (!magnitud || !distancia || angulo === '') {
+                    this.showError(`Completa todos los datos de la Fuerza ${i} (F${i}, d${i}, θ${i})`);
                     return null;
                 }
 
                 fuerzas.push({
                     magnitud: parseFloat(magnitud),
+                    distancia: parseFloat(distancia),
                     angulo: parseFloat(angulo)
                 });
             }
 
             parametros.fuerzas = fuerzas;
-            parametros.d = parseFloat(distancia);
 
         } else if (this.currentScenario.Codigo === 'CONSERVACION_ENERGIA') {
             const campos = ['m', 'h1', 'v1', 'h2', 'v2'];

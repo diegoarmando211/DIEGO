@@ -47,8 +47,8 @@ class DatabaseSimulator {
                 Codigo: 'TRABAJO_VERTICAL',
                 FormulaDescripcion: 'Ep = m × g × h',
                 UnidadResultado: 'J (Joules)',
-                Descripcion: '⛰️ Trabajo necesario para vencer la gravedad y elevar un objeto verticalmente.',
-                Notas: '🌍 g = 9.81 m/s² | 📏 h = altura ganada | 💪 Trabajo contra el campo gravitatorio',
+                Descripcion: '⛰️ Energía almacenada debido a la posición del objeto en el campo gravitatorio terrestre.',
+                Notas: '🌍 g = 9.81 m/s² | 📏 h = altura sobre referencia | � Energía potencial gravitatoria almacenada',
                 parametros: [
                     { ParametroID: 7, Nombre: '⚖️ Masa (kg)', Codigo: 'm', Unidad: 'kg', OrdenParametro: 1, Descripcion: 'Masa del objeto a elevar' },
                     { ParametroID: 8, Nombre: '📏 Altura (m)', Codigo: 'h', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Altura vertical a elevar el objeto' }
