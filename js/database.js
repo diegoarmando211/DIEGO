@@ -181,7 +181,7 @@ class DatabaseSimulator {
                 EscenarioID: 16,
                 Nombre: '💪 Fuerza aplicada por un objeto',
                 Codigo: 'FUERZA_TRABAJO',
-                FormulaDescripción: 'F = W / d',
+                FormulaDescripcion: 'F = W / d',
                 UnidadResultado: 'N (Newton)',
                 Descripcion: '🔧 Fuerza necesaria para realizar un trabajo determinado a lo largo de una distancia específica.',
                 Notas: '💪 F = Fuerza aplicada | ⚡ W = Trabajo en Joules | 📏 d = Distancia en metros',

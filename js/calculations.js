@@ -308,8 +308,8 @@ class PhysicsCalculator {
                 errores.push('La masa debe ser mayor que cero');
             }
 
-            if (param.Codigo === 'd' && valorNumerico < 0) {
-                errores.push('La distancia no puede ser negativa');
+            if (param.Codigo === 'd' && valorNumerico <= 0) {
+                errores.push('La distancia debe ser mayor que cero');
             }
 
             if (param.Codigo === 'v' && valorNumerico < 0) {
