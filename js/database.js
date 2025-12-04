@@ -176,6 +176,19 @@ class DatabaseSimulator {
                     { ParametroID: 38, Nombre: '⚡ Potencia (W)', Codigo: 'P', Unidad: 'W', OrdenParametro: 1, Descripcion: 'Potencia aplicada' },
                     { ParametroID: 39, Nombre: '⏱️ Tiempo (s)', Codigo: 'T', Unidad: 's', OrdenParametro: 2, Descripcion: 'Tiempo durante el cual se aplica la potencia' }
                 ]
+            },
+            {
+                EscenarioID: 16,
+                Nombre: '💪 Fuerza aplicada por un objeto',
+                Codigo: 'FUERZA_TRABAJO',
+                FormulaDescripción: 'F = W / d',
+                UnidadResultado: 'N (Newton)',
+                Descripcion: '🔧 Fuerza necesaria para realizar un trabajo determinado a lo largo de una distancia específica.',
+                Notas: '💪 F = Fuerza aplicada | ⚡ W = Trabajo en Joules | 📏 d = Distancia en metros',
+                parametros: [
+                    { ParametroID: 40, Nombre: '⚡ Trabajo (J)', Codigo: 'W', Unidad: 'J', OrdenParametro: 1, Descripcion: 'Trabajo realizado por la fuerza' },
+                    { ParametroID: 41, Nombre: '📏 Distancia (m)', Codigo: 'd', Unidad: 'm', OrdenParametro: 2, Descripcion: 'Distancia a lo largo de la cual se aplica la fuerza' }
+                ]
             }
         ];
 

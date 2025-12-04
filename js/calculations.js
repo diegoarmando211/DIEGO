@@ -163,6 +163,26 @@ class PhysicsCalculator {
         };
     }
 
+    // Fuerza aplicada por un objeto: F = W / d
+    calcularFuerzaTrabajo(trabajo, distancia) {
+        if (distancia === 0) {
+            throw new Error('La distancia no puede ser cero');
+        }
+        
+        const resultado = trabajo / distancia;
+        
+        return {
+            resultado: parseFloat(resultado.toFixed(4)),
+            explicacion: `F = ${trabajo} J / ${distancia} m = ${resultado.toFixed(4)} N`,
+            pasos: [
+                `La fuerza es el trabajo dividido por la distancia`,
+                `F = W / d`,
+                `F = ${trabajo} / ${distancia} = ${resultado.toFixed(4)} N`,
+                `Esta es la fuerza promedio necesaria para realizar el trabajo a lo largo de la distancia`
+            ]
+        };
+    }
+
     // Método principal para calcular según el escenario
     calcular(escenario, parametros) {
         try {
@@ -246,6 +266,12 @@ class PhysicsCalculator {
                         parametros.T
                     );
 
+                case 'FUERZA_TRABAJO':
+                    return this.calcularFuerzaTrabajo(
+                        parametros.W,
+                        parametros.d
+                    );
+
                 default:
                     throw new Error(`Escenario no reconocido: ${escenario.Codigo}`);
             }
@@ -292,6 +318,10 @@ class PhysicsCalculator {
 
             if (param.Codigo === 'F' && valorNumerico < 0) {
                 errores.push('La fuerza no puede ser negativa');
+            }
+
+            if (param.Codigo === 'W' && valorNumerico < 0) {
+                errores.push('El trabajo no puede ser negativo');
             }
 
             if (param.Codigo === 'theta' && (valorNumerico < 0 || valorNumerico > 180)) {
@@ -502,6 +532,12 @@ class PhysicsCalculator {
                 formula: 'E = P × T',
                 descripcion: 'Calcula la energía total a partir de la potencia aplicada durante un tiempo determinado.',
                 aplicaciones: ['Consumo eléctrico', 'Almacenamiento de energía', 'Eficiencia energética']
+            },
+            'FUERZA_TRABAJO': {
+                nombre: 'Fuerza aplicada por un objeto',
+                formula: 'F = W / d',
+                descripcion: 'Calcula la fuerza necesaria para realizar un trabajo determinado a lo largo de una distancia específica.',
+                aplicaciones: ['Máquinas simples', 'Análisis de eficiencia mecánica', 'Diseño de herramientas']
             }
         };
 

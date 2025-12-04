@@ -52,6 +52,10 @@ class UIManager {
             'TEOREMA_TRABAJO_ENERGIA': {
                 image: 'images/teorema_trabajo.svg',
                 description: 'Teorema trabajo-energía cinética'
+            },
+            'FUERZA_TRABAJO': {
+                image: 'images/fuerza_trabajo.svg',
+                description: '💪 Fuerza aplicada por trabajo y distancia'
             }
         };
     }
